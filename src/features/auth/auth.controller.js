@@ -1,10 +1,27 @@
-const { signupService } = require("./auth.service");
+const { signupService, loginService } = require("./auth.service");
 const ApiError = require("../../utils/ApiError");
-const { STATUS_CODES, ERROR_MESSAGES, ERROR_CODES } = require("../../constants/errorCodes");
+const {
+  STATUS_CODES,
+  ERROR_MESSAGES,
+  ERROR_CODES,
+} = require("../../constants/errorCodes");
 
 const loginController = async (req, res, next) => {
   try {
-    return res.send("Login");
+    let { email, password } = req.body;
+    if (!email || !password) {
+      throw new ApiError(
+        ERROR_MESSAGES.MISSING_CREDENTIALS,
+        STATUS_CODES.BAD_REQUEST,
+        ERROR_CODES.MISSING_CREDENTIALS,
+      );
+    }
+
+    email = email.toLowerCase().trim();
+
+    const result = await loginService(email, password);
+
+    return res.json(result);
   } catch (err) {
     next(err);
   }
@@ -18,7 +35,7 @@ const signupController = async (req, res, next) => {
       throw new ApiError(
         ERROR_MESSAGES.MISSING_CREDENTIALS,
         STATUS_CODES.BAD_REQUEST,
-        ERROR_CODES.MISSING_CREDENTIALS
+        ERROR_CODES.MISSING_CREDENTIALS,
       );
     }
 
