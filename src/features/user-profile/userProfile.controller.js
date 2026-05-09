@@ -1,7 +1,10 @@
-const { addUserProfileDetailsQuery } = require("./userProfile.query");
+const {
+  addUserProfileDetailsQuery,
+  getUserProfileQuery,
+} = require("./userProfile.query");
+const ApiError = require("../../utils/ApiError");
 
-const addUserProfile = async (req, res,next) => {
-
+const addUserProfile = async (req, res, next) => {
   try {
     const userData = req.body;
     await addUserProfileDetailsQuery({ ...userData, userId: req.user.id });
@@ -15,5 +18,26 @@ const addUserProfile = async (req, res,next) => {
   }
 };
 
+const getUserProfile = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const result = await getUserProfileQuery(userId);
 
-module.exports = { addUserProfile }
+    if (result.rows.length === 0) {
+      throw new ApiError(
+        "User profile not found",
+        404,
+        "USER_PROFILE_NOT_FOUND",
+      );
+    }
+
+    return res.json({
+      status: "success",
+      data: result.rows[0],
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { addUserProfile, getUserProfile };

@@ -20,4 +20,11 @@ const addUserProfileDetailsQuery = async (userData) => {
     )
 }
 
-module.exports = { addUserProfileDetailsQuery }
+const getUserProfileQuery = async (userId) => {
+    return await pool.query(
+        `SELECT * FROM user_profile WHERE user_id = $1`,
+        [userId]
+    );
+};
+
+module.exports = { addUserProfileDetailsQuery, getUserProfileQuery }

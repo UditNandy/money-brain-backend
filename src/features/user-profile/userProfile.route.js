@@ -1,9 +1,9 @@
 const express = require("express");
-const { addUserProfile } = require("./userProfile.controller");
+const { addUserProfile, getUserProfile } = require("./userProfile.controller");
 
 const userProfileRouter = express.Router();
 
-userProfileRouter.route("/").get(() => {});
+userProfileRouter.route("/").get(getUserProfile);
 
 userProfileRouter.route("/").put(() => {});
 
