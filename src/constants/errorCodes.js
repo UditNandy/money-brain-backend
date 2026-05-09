@@ -13,12 +13,14 @@ const ERROR_MESSAGES = {
   USER_ALREADY_EXISTS: "User already exists",
   MISSING_CREDENTIALS: "Please provide email and password",
   INTERNAL_SERVER_ERROR: "Internal Server Error",
+  UNAUTHORIZED: "Unauthorized: Invalid or missing token",
 };
 
 const ERROR_CODES = {
   USER_ALREADY_EXISTS: "USER_ALREADY_EXISTS",
   MISSING_CREDENTIALS: "MISSING_CREDENTIALS",
   INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+  UNAUTHORIZED: "UNAUTHORIZED",
 };
 
 module.exports = {
